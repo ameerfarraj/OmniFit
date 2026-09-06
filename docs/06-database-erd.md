@@ -2,52 +2,59 @@
 
 # שרטוט בסיס הנתונים (ERD) - מודול משתמשים והרשאות
 
-בפרויקט זה אנו משתמשים ב-PostgreSQL. להלן מבנה הטבלאות (Schema) בפורמט טבלאי ברור:
+בפרויקט זה אנו משתמשים ב-PostgreSQL. להלן מבנה הטבלאות (Schema) בפורמט טבלאי ברור. 
+*הערת ארכיטקטורה (Scale): על כל שדות ה-Unique והמפתחות הזרים יוגדרו Indexes ב-DB לשליפה מהירה (O(log n)) תחת עומס גבוה.*
 
 ## 1. טבלת משתמשים ואימות (Users)
-טבלת הליבה. מכילה רק נתוני התחברות ואבטחה (ללא נתונים פיזיים)[cite: 2].
+טבלת הליבה. מכילה רק נתוני התחברות, אבטחה וסטטוס מנוי.
 
 | שם השדה (Field) | סוג נתונים | אילוצים (Keys) | תיאור |
 | :--- | :--- | :--- | :--- |
-| **Id** | UUID | Primary Key | מזהה ייחודי מוצפן[cite: 2]. |
-| **Email** | Varchar | Unique | כתובת אימייל (משמשת כשם משתמש)[cite: 2]. |
-| **PasswordHash** | Varchar | | סיסמה מוצפנת (לא נשמור סיסמה גלויה לעולם)[cite: 2]. |
-| **RoleId** | Int | Foreign Key | מזהה הרשאה: 1=מתאמן, 2=מאמן, 3=אדמין[cite: 2]. |
-| **FailedLoginAttempts**| Int | | ספירת נסיונות כושלים (לצורך נעילת Brute-Force)[cite: 2]. |
-| **CreatedAt** | DateTime | | תאריך פתיחת החשבון[cite: 2]. |
-| **IsActive** | Boolean | | האם החשבון פעיל (לצורך מחיקת חשבון רכה - Soft Delete)[cite: 2]. |
-| **GoogleAuthId** | Varchar | Unique | מזהה ייחודי להתחברות דרך חשבון Google. |
-| **AppleAuthId** | Varchar | Unique | מזהה ייחודי להתחברות דרך חשבון Apple. |
+| **Id** | UUID | Primary Key | מזהה ייחודי מוצפן. |
+| **Email** | Varchar | Unique, Index | כתובת אימייל (משמשת כשם משתמש). |
+| **PasswordHash** | Varchar | | סיסמה מוצפנת. |
+| **GoogleAuthId** | Varchar | Unique, Index | מזהה ייחודי להתחברות דרך חשבון Google. |
+| **AppleAuthId** | Varchar | Unique, Index | מזהה ייחודי להתחברות דרך חשבון Apple. |
+| **RoleId** | Int | Foreign Key | מזהה הרשאה: 1=מתאמן, 2=מאמן, 3=אדמין. |
+| **SubscriptionTier**| Varchar | | סטטוס מנוי (למשל: Basic, Premium). קריטי למודל העסקי. |
+| **FailedLoginAttempts**| Int | | ספירת נסיונות כושלים (לצורך נעילת Brute-Force). |
+| **CreatedAt** | DateTime | | תאריך פתיחת החשבון. |
 | **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון (קריטי לסנכרון Offline). |
+| **IsActive** | Boolean | | האם החשבון פעיל (לצורך מחיקת חשבון רכה - Soft Delete). |
 
 ## 2. טבלת פרופיל מתאמן (TraineeProfiles)
-מכילה את נתוני שאלון ההתאמה (Onboarding) לטובת מנוע התזונה והאימונים[cite: 2].
+מכילה את נתוני שאלון ההתאמה (Onboarding), מדדים רפואיים וגיימיפיקציה.
 
 | שם השדה (Field) | סוג נתונים | אילוצים (Keys) | תיאור |
 | :--- | :--- | :--- | :--- |
-| **UserId** | UUID | PK, FK | מפתח ראשי וגם מפתח זר המקושר לטבלת Users[cite: 2]. |
-| **FirstName / LastName** | Varchar | | שם מלא[cite: 2]. |
-| **BirthDate** | Date | | תאריך לידה (נחוץ לבקרת גיל ולנוסחת ה-BMR)[cite: 2]. |
-| **Gender** | Varchar | | מין ביולוגי (לחישובי הוצאה קלורית)[cite: 2]. |
-| **HeightCM** | Decimal | | גובה בסנטימטרים[cite: 2]. |
-| **CurrentWeightKG** | Decimal | | משקל עדכני (יתעדכן אוטומטית מטבלת ה-Check-ins בהמשך)[cite: 2]. |
-| **ActivityLevel** | Int | | רמת פעילות יומית (Multiplier לחישוב TDEE)[cite: 2]. |
+| **UserId** | UUID | PK, FK | מפתח ראשי וגם מפתח זר המקושר לטבלת Users. |
+| **FirstName / LastName** | Varchar | | שם מלא. |
 | **ProfileImageUrl** | Varchar | | קישור (URL) לתמונת הפרופיל בשרת האחסון (AWS S3). |
+| **BirthDate** | Date | | תאריך לידה (נחוץ לבקרת גיל ולנוסחת ה-BMR). |
+| **Gender** | Varchar | | מין ביולוגי (לחישובי הוצאה קלורית). |
+| **HeightCM** | Decimal | | גובה בסנטימטרים. |
+| **CurrentWeightKG** | Decimal | | משקל עדכני (מתעדכן מ-Check-ins). |
+| **ActivityLevel** | Int | | רמת פעילות יומית (Multiplier לחישוב TDEE). |
+| **DietaryPreference** | Varchar | | העדפת תזונה (טבעוני, צמחוני, ללא גלוטן). |
+| **Allergies** | Text | | רגישויות ואלרגיות לסינון במנוע התזונה. |
+| **TotalPoints** | Int | | סך הנקודות שנצברו בגיימיפיקציה (עבור ה-Leaderboard). |
+| **CurrentStreak** | Int | | רצף ימים של עמידה ביעדים. |
+| **LanguageCode** | Varchar | | שפת ממשק מועדפת (למשל: he, en, ar) - תשתית i18n. |
+| **Timezone** | Varchar | | אזור זמן (למשל: Asia/Jerusalem) לתזמון התראות פוש. |
 | **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון בפרופיל. |
-| **DietaryPreference** | Varchar | | העדפת תזונה (לדוגמה: טבעוני, צמחוני, ללא גלוטן)[cite: 2]. |
-| **Allergies** | Text | | רגישויות ואלרגיות לסינון אוטומטי במנוע התזונה[cite: 2]. |
 
 ## 3. טבלת פרופיל מאמן (TrainerProfiles)
-מכילה נתונים ציבוריים שיוצגו בזירת המאמנים (Marketplace)[cite: 2].
+מכילה נתונים ציבוריים שיוצגו בזירת המאמנים (Marketplace).
 
 | שם השדה (Field) | סוג נתונים | אילוצים (Keys) | תיאור |
 | :--- | :--- | :--- | :--- |
-| **UserId** | UUID | PK, FK | מפתח ראשי וגם מפתח זר המקושר לטבלת Users[cite: 2]. |
+| **UserId** | UUID | PK, FK | מפתח ראשי וגם מפתח זר המקושר לטבלת Users. |
 | **ProfileImageUrl** | Varchar | | קישור (URL) לתמונת הפרופיל של המאמן. |
+| **Bio** | Text | | ביוגרפיה / תיאור מקצועי. |
+| **PhoneNumber** | Varchar | | מספר טלפון ליצירת קשר (CRM). |
+| **IsPhonePublic** | Boolean | | האם הטלפון גלוי לכולם או רק למתאמנים רשומים. |
+| **InstagramUrl / TikTokUrl**| Varchar | | קישורים לרשתות חברתיות (Deep Links). |
+| **LanguageCode** | Varchar | | שפת ממשק מועדפת. |
 | **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון בפרופיל. |
-| **Bio** | Text | | ביוגרפיה / תיאור מקצועי[cite: 2]. |
-| **PhoneNumber** | Varchar | | מספר טלפון ליצירת קשר (CRM)[cite: 2]. |
-| **IsPhonePublic** | Boolean | | האם הטלפון גלוי לכולם או רק למתאמנים רשומים[cite: 2]. |
-| **InstagramUrl / TikTokUrl**| Varchar | | קישורים לרשתות חברתיות (Deep Links)[cite: 2]. |
 
 </div>
