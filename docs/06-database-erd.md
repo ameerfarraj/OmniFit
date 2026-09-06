@@ -16,6 +16,9 @@
 | **FailedLoginAttempts**| Int | | ספירת נסיונות כושלים (לצורך נעילת Brute-Force)[cite: 2]. |
 | **CreatedAt** | DateTime | | תאריך פתיחת החשבון[cite: 2]. |
 | **IsActive** | Boolean | | האם החשבון פעיל (לצורך מחיקת חשבון רכה - Soft Delete)[cite: 2]. |
+| **GoogleAuthId** | Varchar | Unique | מזהה ייחודי להתחברות דרך חשבון Google. |
+| **AppleAuthId** | Varchar | Unique | מזהה ייחודי להתחברות דרך חשבון Apple. |
+| **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון (קריטי לסנכרון Offline). |
 
 ## 2. טבלת פרופיל מתאמן (TraineeProfiles)
 מכילה את נתוני שאלון ההתאמה (Onboarding) לטובת מנוע התזונה והאימונים[cite: 2].
@@ -29,6 +32,8 @@
 | **HeightCM** | Decimal | | גובה בסנטימטרים[cite: 2]. |
 | **CurrentWeightKG** | Decimal | | משקל עדכני (יתעדכן אוטומטית מטבלת ה-Check-ins בהמשך)[cite: 2]. |
 | **ActivityLevel** | Int | | רמת פעילות יומית (Multiplier לחישוב TDEE)[cite: 2]. |
+| **ProfileImageUrl** | Varchar | | קישור (URL) לתמונת הפרופיל בשרת האחסון (AWS S3). |
+| **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון בפרופיל. |
 | **DietaryPreference** | Varchar | | העדפת תזונה (לדוגמה: טבעוני, צמחוני, ללא גלוטן)[cite: 2]. |
 | **Allergies** | Text | | רגישויות ואלרגיות לסינון אוטומטי במנוע התזונה[cite: 2]. |
 
@@ -38,6 +43,8 @@
 | שם השדה (Field) | סוג נתונים | אילוצים (Keys) | תיאור |
 | :--- | :--- | :--- | :--- |
 | **UserId** | UUID | PK, FK | מפתח ראשי וגם מפתח זר המקושר לטבלת Users[cite: 2]. |
+| **ProfileImageUrl** | Varchar | | קישור (URL) לתמונת הפרופיל של המאמן. |
+| **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון בפרופיל. |
 | **Bio** | Text | | ביוגרפיה / תיאור מקצועי[cite: 2]. |
 | **PhoneNumber** | Varchar | | מספר טלפון ליצירת קשר (CRM)[cite: 2]. |
 | **IsPhonePublic** | Boolean | | האם הטלפון גלוי לכולם או רק למתאמנים רשומים[cite: 2]. |
