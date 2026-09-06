@@ -17,6 +17,7 @@
 | **AppleAuthId** | Varchar | Unique, Index | מזהה ייחודי להתחברות דרך חשבון Apple. |
 | **RoleId** | Int | Foreign Key | מזהה הרשאה: 1=מתאמן, 2=מאמן, 3=אדמין. |
 | **SubscriptionTier**| Varchar | | סטטוס מנוי (למשל: Basic, Premium). קריטי למודל העסקי. |
+| **StripeCustomerId** | Varchar | Unique, Index | מזהה לקוח במערכת הסליקה החיצונית (לביצוע חיובים בחנות או מנוי). |
 | **FailedLoginAttempts**| Int | | ספירת נסיונות כושלים (לצורך נעילת Brute-Force). |
 | **CreatedAt** | DateTime | | תאריך פתיחת החשבון. |
 | **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון (קריטי לסנכרון Offline). |
@@ -56,5 +57,7 @@
 | **InstagramUrl / TikTokUrl**| Varchar | | קישורים לרשתות חברתיות (Deep Links). |
 | **LanguageCode** | Varchar | | שפת ממשק מועדפת. |
 | **UpdatedAt** | DateTime | | חותמת זמן של העדכון האחרון בפרופיל. |
+| **StripeConnectAccountId** | Varchar | Unique | מזהה חשבון סליקה של המאמן (לקבלת תשלומים אחרי ניכוי עמלת פלטפורמה). |
+| **IsVerified** | Boolean | | האם האדמין אימת ואישר את המאמן (חובה כדי לאפשר לו לקבל מתאמנים ולהציג מוצרים). |
 
 </div>
