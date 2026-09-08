@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "0NJ/a2dRUPo=",
+  "success": true,
+  "projectFilePath": "C:\\Dev\\OmniFit\\OmniFit.Api\\OmniFit.Api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ameer\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.17\\microsoft.aspnetcore.openapi.9.0.17.nupkg.sha512",
+    "C:\\Users\\ameer\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
