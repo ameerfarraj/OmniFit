@@ -1,0 +1,12 @@
+C:\Dev\OmniFit\OmniFit.Core\bin\Debug\net9.0\OmniFit.Core.deps.json
+C:\Dev\OmniFit\OmniFit.Core\bin\Debug\net9.0\OmniFit.Core.dll
+C:\Dev\OmniFit\OmniFit.Core\bin\Debug\net9.0\OmniFit.Core.pdb
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\OmniFit.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\OmniFit.Core.AssemblyInfoInputs.cache
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\OmniFit.Core.AssemblyInfo.cs
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\OmniFit.Core.csproj.CoreCompileInputs.cache
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\OmniFit.Core.sourcelink.json
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\OmniFit.Core.dll
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\refint\OmniFit.Core.dll
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\OmniFit.Core.pdb
+C:\Dev\OmniFit\OmniFit.Core\obj\Debug\net9.0\ref\OmniFit.Core.dll

@@ -4,14 +4,14 @@
     "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\OmniFit.Infrastructure.csproj": {}
   },
   "projects": {
-    "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\OmniFit.Infrastructure.csproj": {
+    "C:\\Dev\\OmniFit\\OmniFit.Core\\OmniFit.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\OmniFit.Infrastructure.csproj",
-        "projectName": "OmniFit.Infrastructure",
-        "projectPath": "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\OmniFit.Infrastructure.csproj",
+        "projectUniqueName": "C:\\Dev\\OmniFit\\OmniFit.Core\\OmniFit.Core.csproj",
+        "projectName": "OmniFit.Core",
+        "projectPath": "C:\\Dev\\OmniFit\\OmniFit.Core\\OmniFit.Core.csproj",
         "packagesPath": "C:\\Users\\ameer\\.nuget\\packages\\",
-        "outputPath": "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\obj\\",
+        "outputPath": "C:\\Dev\\OmniFit\\OmniFit.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ameer\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,81 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\OmniFit.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\OmniFit.Infrastructure.csproj",
+        "projectName": "OmniFit.Infrastructure",
+        "projectPath": "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\OmniFit.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\ameer\\.nuget\\packages\\",
+        "outputPath": "C:\\Dev\\OmniFit\\OmniFit.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\ameer\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "C:\\Dev\\OmniFit\\OmniFit.Core\\OmniFit.Core.csproj": {
+                "projectPath": "C:\\Dev\\OmniFit\\OmniFit.Core\\OmniFit.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
