@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OmniFit.Core.Entities
 {
     public class TrainerProfile
     {
-        // מפתח ראשי שהוא גם מפתח זר למשתמש
+        //מפתח ראשי שהוא גם מפתח זר למשתמש
+        [Key]
         public Guid UserId { get; set; }
 
         // נתוני פרופיל פומביים

@@ -1,10 +1,12 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace OmniFit.Core.Entities
 {
     public class TraineeProfile
     {
         // מפתח ראשי שהוא גם מפתח זר למשתמש
+        [Key]
         public Guid UserId { get; set; }
 
         // נתונים אישיים
