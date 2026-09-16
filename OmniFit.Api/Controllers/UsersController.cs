@@ -21,8 +21,12 @@ public class UsersController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
-        var users = await _context.Users.ToListAsync();
-        return Ok(users); // מחזיר סטטוס 200 ואת הנתונים
+        var users = await _context.Users
+            .Include(u => u.TraineeProfile) // שאיבת הפרופיל הפיזיולוגי
+            .Include(u => u.TrainerProfile) // שאיבת הפרופיל המקצועי
+            .ToListAsync();
+
+        return Ok(users);
     }
 
     // Endpoint שני: יצירת משתמש חדש
