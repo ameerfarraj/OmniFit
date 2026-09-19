@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniFit.Api", "OmniFit.Api\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniFit.Tests", "OmniFit.Tests\OmniFit.Tests.csproj", "{8AB9B607-1D18-4978-A68F-81A6B61A5616}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmniFit.Application", "OmniFit.Application\OmniFit.Application.csproj", "{60818A89-2D83-40D5-AFC7-5227B2180F90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,18 @@ Global
 		{8AB9B607-1D18-4978-A68F-81A6B61A5616}.Release|x64.Build.0 = Release|Any CPU
 		{8AB9B607-1D18-4978-A68F-81A6B61A5616}.Release|x86.ActiveCfg = Release|Any CPU
 		{8AB9B607-1D18-4978-A68F-81A6B61A5616}.Release|x86.Build.0 = Release|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Debug|x64.Build.0 = Debug|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Debug|x86.Build.0 = Debug|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Release|x64.ActiveCfg = Release|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Release|x64.Build.0 = Release|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Release|x86.ActiveCfg = Release|Any CPU
+		{60818A89-2D83-40D5-AFC7-5227B2180F90}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
