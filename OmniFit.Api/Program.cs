@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OmniFit.Application.Services.Identity;
 using OmniFit.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 // החיבור שלנו למסד הנתונים PostgreSQL
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();
+// התוספת החדשה: רישום מנגנון הנעילה למערכת הזרקת התלויות
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 var app = builder.Build();
 

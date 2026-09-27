@@ -16,7 +16,10 @@ namespace OmniFit.Core.Entities
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public bool IsLockedOut { get; set; } = false;
+        public DateTime? LockoutEnd { get; set; }
 
+      
         public TraineeProfile? TraineeProfile { get; set; }
         public TrainerProfile? TrainerProfile { get; set; }
     }
