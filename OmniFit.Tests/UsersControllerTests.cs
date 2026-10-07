@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OmniFit.Api.Controllers;
+using OmniFit.Application.Services.Identity; // הוספנו את הגישה לשירותים
 using OmniFit.Core.Entities;
 using OmniFit.Infrastructure.Data;
 using Xunit;
@@ -30,7 +31,9 @@ public class UsersControllerTests
         });
         await context.SaveChangesAsync();
 
-        var controller = new UsersController(context);
+        // התיקון: יצירת שירות ההרשמה והזרקתו לקונטרולר יחד עם מסד הנתונים
+        var registrationService = new UserRegistrationService();
+        var controller = new UsersController(context, registrationService);
 
         // 2. Act - הפעלת הפונקציה (שליפת המשתמשים)
         var result = await controller.GetAllUsers();

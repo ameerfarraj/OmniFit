@@ -23,17 +23,13 @@ public class UserRegistrationService : IUserRegistrationService
     // מדיניות סיסמאות: לפחות 8 תווים, אות גדולה, קטנה, מספר ותו מיוחד
     public bool IsPasswordStrong(string password)
     {
-        if (string.IsNullOrWhiteSpace(password) || password.Length < 8) 
+        if (string.IsNullOrWhiteSpace(password) || password.Length < 8)
             return false;
-        
-        var hasUpper = new Regex(@"[A-Z]+");
-        var hasLower = new Regex(@"[a-z]+");
-        var hasNumber = new Regex(@"[0-9]+");
-        var hasSpecial = new Regex(@"[\W_]+");
 
-        return hasUpper.IsMatch(password) && 
-               hasLower.IsMatch(password) && 
-               hasNumber.IsMatch(password) && 
-               hasSpecial.IsMatch(password);
+        // שימוש בקריאה סטטית שמשתמשת במטמון (Cache) פנימי ומונעת הקצאות זיכרון מיותרות
+        return Regex.IsMatch(password, @"[A-Z]+") &&
+               Regex.IsMatch(password, @"[a-z]+") &&
+               Regex.IsMatch(password, @"[0-9]+") &&
+               Regex.IsMatch(password, @"[\W_]+");
     }
 }
