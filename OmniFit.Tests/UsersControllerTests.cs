@@ -32,8 +32,12 @@ public class UsersControllerTests
         await context.SaveChangesAsync();
 
         // התיקון: יצירת שירות ההרשמה והזרקתו לקונטרולר יחד עם מסד הנתונים
+        // יצירת השירותים שהקונטרולר דורש
         var registrationService = new UserRegistrationService();
-        var controller = new UsersController(context, registrationService);
+        var authService = new AuthenticationService(); // יצירת שירות ההתחברות עבור הטסט
+
+        // הזרקת כל שלושת הפרמטרים (מסד נתונים + שני השירותים) לקונטרולר
+        var controller = new UsersController(context, registrationService, authService);
 
         // 2. Act - הפעלת הפונקציה (שליפת המשתמשים)
         var result = await controller.GetAllUsers();
