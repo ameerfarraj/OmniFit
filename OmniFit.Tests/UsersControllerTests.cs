@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OmniFit.Api.Controllers;
-using OmniFit.Application.Services.Identity; // הוספנו את הגישה לשירותים
+using OmniFit.Application.Services.Identity;
 using OmniFit.Core.Entities;
 using OmniFit.Infrastructure.Data;
 using Xunit;
+using Microsoft.Extensions.Configuration;
 
 namespace OmniFit.Tests;
 
@@ -31,13 +32,22 @@ public class UsersControllerTests
         });
         await context.SaveChangesAsync();
 
-        // התיקון: יצירת שירות ההרשמה והזרקתו לקונטרולר יחד עם מסד הנתונים
         // יצירת השירותים שהקונטרולר דורש
         var registrationService = new UserRegistrationService();
-        var authService = new AuthenticationService(); // יצירת שירות ההתחברות עבור הטסט
+        var authService = new AuthenticationService();
 
-        // הזרקת כל שלושת הפרמטרים (מסד נתונים + שני השירותים) לקונטרולר
-        var controller = new UsersController(context, registrationService, authService);
+        // התיקון: יצירת קונפיגורציה מזויפת לטובת הטסט כדי שהקונטרולר לא יקרוס
+        var inMemorySettings = new Dictionary<string, string> {
+            {"JwtSettings:SecretKey", "TestSecretKeyForUnitTestsOnlyDoNotUseInProd!!"},
+            {"JwtSettings:Issuer", "TestIssuer"},
+            {"JwtSettings:Audience", "TestAudience"}
+        };
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings!)
+            .Build();
+
+        // הזרקת כל ארבעת הפרמטרים (מסד נתונים, שני השירותים, והגדרות) לקונטרולר
+        var controller = new UsersController(context, registrationService, authService, configuration);
 
         // 2. Act - הפעלת הפונקציה (שליפת המשתמשים)
         var result = await controller.GetAllUsers();

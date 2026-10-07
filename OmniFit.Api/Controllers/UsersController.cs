@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 
 namespace OmniFit.Api.Controllers;
 
@@ -17,16 +18,22 @@ public class UsersController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly IUserRegistrationService _registrationService;
-    private readonly IAuthenticationService _authService; // 1. הוספנו את שירות ההתחברות
+    private readonly IAuthenticationService _authService;
+    private readonly IConfiguration _configuration; // הוספנו את מנהל ההגדרות
 
-    // 2. עדכנו את הבנאי כדי לקבל גם את שירות ההתחברות
-    public UsersController(ApplicationDbContext context, IUserRegistrationService registrationService, IAuthenticationService authService)
+    // עדכנו את הבנאי כדי לקבל את IConfiguration
+    public UsersController(
+        ApplicationDbContext context,
+        IUserRegistrationService registrationService,
+        IAuthenticationService authService,
+        IConfiguration configuration)
     {
         _context = context;
         _registrationService = registrationService;
         _authService = authService;
+        _configuration = configuration;
     }
-
+    // ... המשך הקוד נשאר אותו דבר
     [HttpGet]
     public async Task<IActionResult> GetAllUsers()
     {
@@ -124,23 +131,38 @@ public class UsersController : ControllerBase
     // פונקציית עזר ליצירת הטוקן (JWT)
     private string GenerateJwtToken(User user)
     {
-        // מפתח סודי - בפרודקשן זה אמור להילקח מה-appsettings.json ולא להיות כתוב כאן בקוד הגלוי!
-        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperSecretKeyThatIsAtLeast32CharactersLongForOmniFit!!"));
+        // משיכת המפתח הסודי מקובץ ההגדרות (appsettings.json)
+        var secretKeyString = _configuration["JwtSettings:SecretKey"];
+        if (string.IsNullOrEmpty(secretKeyString))
+        {
+            throw new InvalidOperationException("JWT Secret Key is missing in configuration.");
+        }
+
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKeyString));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        // הוספת מידע לתוך הטוקן (Claims) - למשל מי המשתמש
+        // הוספת מידע לתוך הטוקן (Claims)
         var claims = new[]
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email)
         };
 
-        // יצירת הטוקן שיהיה בתוקף לשעתיים
+        // משיכת שאר ההגדרות מקובץ ה-JSON עם ערכי ברירת מחדל לביטחון
+        var issuer = _configuration["JwtSettings:Issuer"] ?? "OmniFitAPI";
+        var audience = _configuration["JwtSettings:Audience"] ?? "OmniFitClients";
+
+        // ננסה לקרוא את זמן התפוגה מההגדרות, ואם נכשל נגדיר לשעתיים
+        if (!double.TryParse(_configuration["JwtSettings:ExpirationHours"], out double expirationHours))
+        {
+            expirationHours = 2;
+        }
+
         var token = new JwtSecurityToken(
-            issuer: "OmniFitAPI",
-            audience: "OmniFitClients",
+            issuer: issuer,
+            audience: audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(2),
+            expires: DateTime.UtcNow.AddHours(expirationHours),
             signingCredentials: credentials);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
