@@ -56,12 +56,18 @@ namespace OmniFit.Infrastructure.Migrations
                     b.Property<decimal>("HeightCM")
                         .HasColumnType("numeric");
 
+                    b.Property<bool>("IsAgeVerified")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LanguageCode")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PreviousExperience")
                         .HasColumnType("text");
 
                     b.Property<string>("ProfileImageUrl")
@@ -73,6 +79,9 @@ namespace OmniFit.Infrastructure.Migrations
 
                     b.Property<int>("TotalPoints")
                         .HasColumnType("integer");
+
+                    b.Property<string>("TrainingGoals")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");

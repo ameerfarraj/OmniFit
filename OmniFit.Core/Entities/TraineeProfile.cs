@@ -25,6 +25,11 @@ namespace OmniFit.Core.Entities
         public string? DietaryPreference { get; set; }
         public string? Allergies { get; set; }
 
+        // מטרות וניסיון (תוספות חובה לשאלון Onboarding)
+        public string? TrainingGoals { get; set; }
+        public string? PreviousExperience { get; set; }
+        public bool IsAgeVerified { get; set; }
+
         // גיימיפיקציה
         public int TotalPoints { get; set; } = 0;
         public int CurrentStreak { get; set; } = 0;
