@@ -4,6 +4,7 @@ using OmniFit.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using OmniFit.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,10 +21,13 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
 // הזרקת השירותים
 builder.Services.AddScoped<IUserRegistrationService, UserRegistrationService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+// טעינת כל השירותים של שכבת הלוגיקה יחד (דרך קובץ ה-DependencyInjection שיצרנו)
+builder.Services.AddApplication();
 // הגדרות אימות ו-JWT
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT Secret Key is missing.");

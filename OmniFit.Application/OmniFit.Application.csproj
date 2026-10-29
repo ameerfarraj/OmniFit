@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OmniFit.Core\OmniFit.Core.csproj" />
+    <ProjectReference Include="..\OmniFit.Infrastructure\OmniFit.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
